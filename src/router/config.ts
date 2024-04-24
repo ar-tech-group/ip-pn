@@ -2,5 +2,7 @@
  * Имена роутов
  */
 export const ROUTES = {
-    INDEX: 'index'
+    INDEX:     'index',
+    IP:        'ip',
+    IP_DETAIL: 'ip-detail'
 };
