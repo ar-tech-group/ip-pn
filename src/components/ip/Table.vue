@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import {
     ElTable,
     ElTableColumn,
@@ -25,6 +26,8 @@ const props = defineProps<{
 }>();
 
 const store = useIpStore();
+
+const router = useRouter();
 
 const sorted = ref<string>('');
 const isSelected = ref<IpItemModifyType[]>([]);
@@ -103,28 +106,32 @@ watch(sorted, (next) => {
                 width="300"
             >
                 <template #default="data">
-                    <ElIcon>
-                        <UiIcon
-                            :name="String(data.row.country).replace(/\s/g, '')"
-                        />
-                    </ElIcon>
-
-                    {{ data.row.query }}
-
-                    <ElButton
-                        v-if="data.row.checked"
-                        @click="store.remove(data.row.query)"
+                    <div
+                        @click="router.push(`/ip/${data.row.query}`)"
                     >
-                        <IconTrash />
-                    </ElButton>
+                        <ElIcon>
+                            <UiIcon
+                                :name="String(data.row.country).replace(/\s/g, '')"
+                            />
+                        </ElIcon>
 
-                    <ElButton
-                        v-else
-                        class="el-table__btn-copy"
-                        @click="copyData(JSON.stringify(data.row))"
-                    >
-                        <IconCopy />
-                    </ElButton>
+                        {{ data.row.query }}
+
+                        <ElButton
+                            v-if="data.row.checked"
+                            @click="store.remove(data.row.query)"
+                        >
+                            <IconTrash />
+                        </ElButton>
+
+                        <ElButton
+                            v-else
+                            class="el-table__btn-copy"
+                            @click="copyData(JSON.stringify(data.row))"
+                        >
+                            <IconCopy />
+                        </ElButton>
+                    </div>
                 </template>
             </ElTableColumn>
 
