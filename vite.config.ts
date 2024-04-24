@@ -2,6 +2,7 @@ import { resolve } from 'node:path';
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import eslintPlugin from 'vite-plugin-eslint';
+import svgLoader from 'vite-svg-loader';
 
 /**
  * Конфигурация приложения.
@@ -14,8 +15,9 @@ export default ({ mode }: { mode: string }) => {
     return defineConfig({
         base:    '',
         plugins: [
-            eslintPlugin({ cache: false }),
             vue(),
+            svgLoader(),
+            eslintPlugin({ cache: false }),
         ],
         build: {
             minify:            'terser',
